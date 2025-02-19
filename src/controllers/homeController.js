@@ -14,7 +14,11 @@ const getCRUD = async (req, res) => {
     return res.render("crud.ejs")
 }
 const postCRUD = async (req, res) => { 
-    const data = await CRUDService.createUser(req.body)
+    const user = {
+        ...req.body,
+        roleId: req.body.roleid || req.body.roleId
+    };
+    const data = await CRUDService.createUser(user);
     console.log(data);
     
     return res.send("POSST")

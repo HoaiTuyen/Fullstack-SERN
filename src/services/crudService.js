@@ -1,12 +1,11 @@
 import bcrypt from "bcryptjs";
 import db from '../models/index'
-import { raw } from "express";
 const salt = bcrypt.genSaltSync(10);
 const createUser = async (data) => {
     return new Promise( async(resolve, reject) => {
         try {
             const hashPassFrom = await hashUserPass(data.password);
-            await db.User.create({
+            const user = await db.User.create({
                 email: data.email,
                 password: hashPassFrom,
                 firstName: data.firstName,
@@ -14,9 +13,11 @@ const createUser = async (data) => {
                 address: data.address,
                 phoneNumber: data.phoneNumber,
                 gender: data.gender === '1' ? true : false,
-                roleId: data.email,
+                roleId: data.roleId,
             })
-            resolve('Create Success');
+
+            // resolve('Create Success');
+            resolve(user);
 
         } catch(e) {
             reject(e);
