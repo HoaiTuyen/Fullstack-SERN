@@ -4,11 +4,29 @@ require("dotenv").config();
 import viewEngine from './config/viewEngine';
 import initWebRouters from './router/web'
 import connectDB from './config/connectDB';
+import cors from 'cors'
 const app = express();
 //congif app
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended:true}));
+const allowedOrigins = [
+    "http://localhost:3000",
+    "http://localhost:3003"
+    
+];
 
+app.use(cors({ 
+    origin: function (origin, callback) {
+        if (!origin || allowedOrigins.includes(origin)) {
+            callback(null, origin);  // Trả về origin được phép
+        } else {
+            callback(new Error("CORS policy does not allow this origin!"));
+        }
+    },
+    credentials: true, // Cho phép gửi cookies hoặc token
+    methods: ["GET", "POST", "PUT", "DELETE"], 
+    allowedHeaders: ["Content-Type", "Authorization"]
+}));
 viewEngine(app);
 initWebRouters(app);
 connectDB();

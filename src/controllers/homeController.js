@@ -19,7 +19,6 @@ const postCRUD = async (req, res) => {
         roleId: req.body.roleid || req.body.roleId
     };
     const data = await CRUDService.createUser(user);
-    console.log(data);
     
     return res.send("POSST")
     
