@@ -96,6 +96,7 @@ const createUser = (data) => {
           gender: data.gender,
           roleId: data.roleId,
           positionId: data.positionId,
+          image: data.avatar,
         });
 
         resolve({
@@ -170,6 +171,9 @@ const editUser = (data) => {
         user.roleId = data.roleId;
         user.positionId = data.positionId;
         user.avatar = data.avatar;
+        if (data.avatar) {
+          user.image = data.avatar;
+        }
         await user.save();
         resolve({
           errCode: 0,

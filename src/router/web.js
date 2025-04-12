@@ -2,6 +2,7 @@ import express from "express";
 const router = express.Router();
 import homeController from "../controllers/homeController";
 import userController from "../controllers/userController";
+import doctorController from "../controllers/doctorController";
 import delay from "../config/delay";
 const initWebRouter = (app) => {
   router.get("/", homeController.getHomePage);
@@ -19,6 +20,14 @@ const initWebRouter = (app) => {
   router.delete("/api/delete-user", userController.handleDeleteUser);
 
   router.get("/api/allcode", userController.getAllCode);
+  router.get("/api/top-doctor-home", doctorController.getTopDoctorHome);
+  router.get("/api/get-all-doctor", doctorController.getAllDoctor);
+  router.post("/api/save-info-doctor", doctorController.saveInfoDoctor);
+
+  router.get(
+    "/api/get-detail-doctoc-by-id",
+    doctorController.getDetailDoctorById
+  );
   return app.use("/", router);
 };
 module.exports = initWebRouter;
